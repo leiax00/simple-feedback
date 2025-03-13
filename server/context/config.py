@@ -15,6 +15,8 @@ class DBConfig:
 
 class Config:
     db_config = DBConfig()
+    # dist相对server根路径的目录,或绝对路径
+    ui_root = os.getenv("UI_ROOT", "../admin/dist")
 
 
 config = Config()
