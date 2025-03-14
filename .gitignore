@@ -5,6 +5,11 @@ package-lock.json
 yarn.lock
 pnpm-lock.yaml
 
+auto-imports.d.ts
+components.d.ts
+eslint-auto-import.js
+eslint-auto-import.json
+
 # ---> Node
 # Logs
 logs

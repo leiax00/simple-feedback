@@ -23,3 +23,4 @@ class DeviceVo(Author, Remark):
 class DeviceInitReply(BaseVO):
     device_id: Optional[int] = Field(default=None, description='设备ID')
     owner_id: Optional[int] = Field(default=None, description='归属者ID')
+    access_token: Optional[str] = Field(default=None, description='分配的用户Bearer token, 有效期1小时')

@@ -1,6 +1,8 @@
 fastapi
+fastapi-login
 uvicorn
 sqlalchemy
 pymysql
 python-multipart
 python-dotenv
+bcrypt

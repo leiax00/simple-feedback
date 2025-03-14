@@ -6,6 +6,7 @@ from starlette import status
 
 from server import service
 from server.context import database
+from server.context.security import manager
 from server.entity import schema
 from server.entity.schema import R, PageR
 
@@ -20,7 +21,8 @@ router = APIRouter(prefix='/message/v1', tags=['Message'])
 )
 async def get_topic_list(
         q: Annotated[schema.MessageQuery, Query()],
-        db: Session = Depends(database.session)
+        db: Session = Depends(database.session),
+        user: str = Depends(manager)
 ):
     """
     获取问题反馈列表
@@ -36,7 +38,8 @@ async def get_topic_list(
 )
 async def message_list_4_topic(
     q: Annotated[schema.Msg4TopicQuery, Query()],
-    db: Session = Depends(database.session)
+    db: Session = Depends(database.session),
+    user: str = Depends(manager)
 ):
     """
     获取一个主题下所有消息
@@ -53,13 +56,16 @@ async def message_list_4_topic(
 )
 async def new_message(
         msg: schema.MessageCreate,
-        db: Session = Depends(database.session)
+        db: Session = Depends(database.session),
+        user: str = Depends(manager)
 ):
     """
     添加问题反馈
+    :param user: 用户名
     :param msg: 反馈内容
     :param db: 数据库连接
     """
+    msg.create_by = user
     message = service.message.new_message(msg, db)
     if not message:
         return R(code=status.HTTP_400_BAD_REQUEST, msg='添加失败')

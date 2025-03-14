@@ -6,7 +6,8 @@ from starlette import status
 
 from server import service
 from server.context import database
-from server.entity import schema
+from server.context.security import manager
+from server.entity import schema, model
 from server.entity.schema import PageR, R
 
 router = APIRouter(prefix='/device/v1', tags=['Device'])
@@ -18,8 +19,10 @@ router = APIRouter(prefix='/device/v1', tags=['Device'])
 )
 async def get_device_list(
         q: Annotated[schema.DeviceQuery, Query()],
-        db: Session = Depends(database.session)
+        db: Session = Depends(database.session),
+        user: str = Depends(manager)
 ):
+    print(user)
     total, device_list = service.get_device_list(q, db)
     return PageR(rows=device_list, total=total)
 
@@ -30,7 +33,8 @@ async def get_device_list(
 )
 async def get_device_by_id(
         device_id: int,
-        db: Session = Depends(database.session)
+        db: Session = Depends(database.session),
+        user: str = Depends(manager)
 ):
     device = service.get_device_by_id(device_id, db)
     if not device:
@@ -44,7 +48,8 @@ async def get_device_by_id(
 )
 async def get_device_by_key(
         device_key: str,
-        db: Session = Depends(database.session)
+        db: Session = Depends(database.session),
+        user: str = Depends(manager)
 ):
     device = service.get_device_by_key(device_key, db)
     if not device:

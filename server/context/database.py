@@ -31,10 +31,11 @@ def session():
     finally:
         db.close()
 
+
 @contextmanager
-def context(self):
-    d = self.__sessionLocal()
+def context():
+    db = SessionLocal()
     try:
-        yield d
+        yield db
     finally:
-        d.close()
+        db.close()

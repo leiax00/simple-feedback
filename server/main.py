@@ -9,10 +9,11 @@ from server.context.config import config
 
 app = FastAPI()
 
-
+app.include_router(routes.api_router)
 
 # 挂载静态文件
 app.mount("/static", StaticFiles(directory=f"{config.ui_root}/assets"), name="static")
+
 
 # 处理 Vue 3 前端路由
 @app.get("/{full_path:path}")
@@ -26,8 +27,6 @@ async def serve_vue_app(full_path: str):
     # 否则返回 index.html，交给 Vue 处理前端路由
     return FileResponse(os.path.join(config.ui_root, "index.html"))
 
-
-app.include_router(routes.api_router)
 
 if __name__ == "__main__":
     import uvicorn
