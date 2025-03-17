@@ -62,3 +62,15 @@ async def login(
         raise HTTPException(status_code=401, detail="Invalid credentials")
     token = manager.create_access_token(data={"sub": user.username})
     return { "access_token": token, "token_type": "bearer" }
+
+@router.get(
+    "/user/info",
+    response_model=R[schema.User],
+    response_model_exclude_none=True
+)
+async def get_user_info(
+        username: str = Depends(manager),
+        db: Session = Depends(database.session)
+):
+    user = service.user.get_user_by_username(username, db)
+    return R(data=user)

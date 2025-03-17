@@ -43,6 +43,8 @@ class UserLogin(BaseVO):
 class UserCreate(UserBase):
     password: str = Field(..., max_length=100, description="密码")
 
-class UserResponse(UserBase):
+class User(UserBase):
     user_id: int = Field(..., description="用户ID")
     password: Optional[str] = Field(None, exclude=True)  # 排除密码字段
+    del_flag: Optional[str] = Field(None, exclude=True)
+    status: Optional[str] = Field(None, exclude=True)
