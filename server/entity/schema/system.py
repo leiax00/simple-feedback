@@ -36,12 +36,14 @@ class UserBase(Author, Remark):
         }
 
 class UserLogin(BaseVO):
-    username: str = Field(None, max_length=30, description="用户账号")
-    password: str = Field(None, max_length=100, description="密码")
+    username: Optional[str] = Field(None, max_length=30, description="用户账号")
+    password: Optional[str] = Field(None, max_length=100, description="密码")
 
 
 class UserCreate(UserBase):
     password: str = Field(..., max_length=100, description="密码")
+    create_time: Optional[datetime] = Field(datetime.now(), description="创建时间")
+    user_type: Optional[str] = Field("01", max_length=2, description="用户类型（00系统用户）")
 
 class User(UserBase):
     user_id: int = Field(..., description="用户ID")
