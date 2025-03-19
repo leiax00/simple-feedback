@@ -15,11 +15,7 @@ const useUserStore = defineStore("user", {
             resolve(res)
           })
           .catch(error => {
-            if (error === 401) {
-              this.token = ""
-              removeToken()
-              this.userInfo = {}
-            }
+            this.resetToken()
             reject(error)
           })
       })
@@ -39,11 +35,14 @@ const useUserStore = defineStore("user", {
     },
     logout() {
       return new Promise(resolve => {
-        this.token = ""
-        removeToken()
-        this.userInfo = {}
+        this.resetToken()
         resolve()
       })
+    },
+    resetToken() {
+      this.token = ""
+      removeToken()
+      this.userInfo = {}
     },
   },
 })

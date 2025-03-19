@@ -31,6 +31,7 @@ router.beforeEach((to, from, next) => {
           })
           .catch(err => {
             console.log(err)
+            store.resetToken()
             next({ path: `/login?redirect=${to.fullPath}` })
           })
       } else {

@@ -1,3 +1,18 @@
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+drop schema if exists simple_feedback;
+create schema simple_feedback collate utf8mb4_unicode_ci;
+
+-- 创建用户
+DROP USER IF EXISTS 'fb_user'@'%';
+CREATE USER 'fb_user'@'%' IDENTIFIED BY 'fb_pwd@2025';
+GRANT ALL PRIVILEGES ON simple_feedback.* TO 'fb_user'@'%';
+FLUSH PRIVILEGES;
+
+-- 切换到数据库
+USE simple_feedback;
+
 drop table if exists fb_dict_data;
 create table fb_dict_data
 (
@@ -108,13 +123,16 @@ create table fb_message
     device_id   bigint                  not null comment '设备ID',
     content     text         default '' comment '内容',
     meta        text         default '{}' comment '元数据, json字符串',
+    status      char         default '0' null comment '状态（0正常 1已解决）',
+    del_flag    char         default '0' null comment '删除标志（0代表存在 2代表删除）',
     create_by   varchar(64)  default '' null comment '创建者',
     create_time datetime                null comment '创建时间',
     update_by   varchar(64)  default '' null comment '更新者',
     update_time datetime                null comment '更新时间',
     remark      varchar(500) default '' null comment '备注',
     index idx_top_parent (top_id, parent_id),
-    index idx_owner_device (owner_id, device_id)
+    index idx_owner_device (owner_id, device_id),
+    index idx_update_time (update_time)
 ) comment "信息反馈表";
 
 drop table if exists fb_user;
