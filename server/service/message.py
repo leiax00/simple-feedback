@@ -40,7 +40,7 @@ def topic_all_in_one(q: schema.MessageQuery, db):
     with db.begin():
         total, topics = topic_list(q, db)
         for topic in topics:
-            total, msgs = message_list_4_topic(schema.Msg4TopicQuery(
+            topic_total, msgs = message_list_4_topic(schema.Msg4TopicQuery(
                 topic_id=topic.msg_id,
                 page_size=0,
                 page_num=0

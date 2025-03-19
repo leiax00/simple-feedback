@@ -7,8 +7,13 @@
 
   const pageData = reactive({
     curOwner: null,
+    total: 0,
     msgs: [],
     replyMsgData: {},
+    pageInfo: {
+      pageNum: 1,
+      pageSize: 10,
+    },
   })
 
   const ownerTreeProps = {
@@ -52,10 +57,21 @@
   }
 
   const loadOwnerTopics = () => {
-    topicAllInList({ ownerId: pageData.curOwner.ownerId }).then(({ rows }) => {
+    topicAllInList({
+      ownerId: pageData.curOwner.ownerId,
+      pageNum: pageData.pageInfo.pageNum,
+      pageSize: pageData.pageInfo.pageSize,
+    }).then(({ total, rows }) => {
       console.log(rows)
       pageData.msgs = rows
+      pageData.total = total
     })
+  }
+
+  const onChangePage = (currentPage, pageSize) => {
+    pageData.pageInfo.pageNum = currentPage
+    pageData.pageInfo.pageSize = pageSize
+    loadOwnerTopics()
   }
 
   provide(PJ_MSG, {
@@ -85,10 +101,26 @@
       class="flex flex-col w-full sm:w-7/12 md:w-8/12 lg:w-9/12 border border-solid dark:border-zinc-700 rounded-md sm:mb-6 p-3 lg:p-6"
     >
       <div v-if="pageData.curOwner" class="grow msg-wrapper flex flex-col">
-        <div class="owner-name text-xl">{{ pageData.curOwner.ownerName }}</div>
+        <div class="title-wrapper flex flex-row items-center justify-between">
+          <div class="owner-name text-xl">{{ pageData.curOwner.ownerName }}</div>
+          <div class="right">
+            <el-button link @click="loadOwnerTopics">刷新</el-button>
+          </div>
+        </div>
+
         <div class="msg-wrapper flex flex-col mt-8">
           <Message v-for="msg in pageData.msgs" :key="msg.info.msgId" :message="msg" />
         </div>
+        <el-pagination
+          v-model:current-page="pageData.pageInfo.pageNum"
+          v-model:page-size="pageData.pageInfo.pageSize"
+          size="small"
+          background
+          layout="prev, pager, next"
+          :total="50"
+          class="mt-4 justify-end"
+          @change="onChangePage"
+        />
       </div>
       <div v-else class="grow msg-wrapper flex flex-col items-center justify-center">
         <div class="msg-title text-xl text-zinc-500">Please select one product type!</div>
@@ -121,6 +153,12 @@
         }
       }
     }
+  }
+
+  :deep(.el-pagination) {
+    --el-pagination-bg-color: var(--color-zinc-700);
+    --el-disabled-bg-color: var(--color-zinc-500);
+    --el-pagination-button-bg-color: var(--color-zinc-300);
   }
 
   .msg-wrapper {

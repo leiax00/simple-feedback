@@ -16,7 +16,15 @@
     <div class="footer-wrapper">
       <BaseFooter />
     </div>
+    <el-backtop :right="40" :bottom="92" />
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+  :deep(.el-backtop) {
+    --el-backtop-bg-color: var(--color-zinc-700);
+    --el-backtop-hover-bg-color: var(--color-zinc-500);
+  }
+  .layout-main {
+  }
+</style>
