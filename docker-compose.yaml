@@ -26,4 +26,5 @@ services:
 
 networks:
   feedback-net:
+    name: feedback-net
     driver: bridge
