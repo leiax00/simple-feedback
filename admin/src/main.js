@@ -4,5 +4,9 @@ import "./style.css"
 import App from "./App.vue"
 import router from "@/router"
 import store from "@/store"
+import { UserFilled, ChatSquare } from "@element-plus/icons-vue"
 
-createApp(App).use(router).use(store).mount("#app")
+const app = createApp(App)
+app.component("UserFilled", UserFilled)
+app.component("ChatSquare", ChatSquare)
+app.use(router).use(store).mount("#app")

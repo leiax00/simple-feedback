@@ -12,8 +12,8 @@ class MessageBase(BaseVO):
 
 
 class MessageQuery(Page):
-    device_id: int = Field(description='设备ID')
-    owner_id: int = Field(description='归属ID')
+    device_id: Optional[int] = Field(0, description='设备ID')
+    owner_id: Optional[int] = Field(0, description='归属ID')
 
 class Msg4TopicQuery(Page):
     topic_id: int = Field(description='主题ID')
@@ -73,3 +73,7 @@ class Message(MessageBase, Author, Remark):
             except json.JSONDecodeError:
                 return {"all": value}
         return value  # 不是字符串就直接返回
+
+class MessageAll(BaseVO):
+    info: Message
+    subs: List[Message]

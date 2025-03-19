@@ -1,6 +1,7 @@
 import axios from "axios"
 import { ElMessage } from "element-plus"
 import { getToken } from "@/utils/auth"
+import router from "@/router/index.js"
 
 axios.defaults.headers["Content-Type"] = "application/json;charset=utf-8"
 // 创建axios实例
@@ -45,9 +46,7 @@ service.interceptors.response.use(
     if (error.status === 401) {
       ElMessage({ message: error.response.data.detail, type: "error", duration: 5 * 1000 })
       if (error.config.url !== "/system/v1/user/info") {
-        useRouter()
-          .push({ path: "/login" })
-          .then(() => {})
+        router.push({ path: "/login" }).then(() => {})
       }
     } else {
       ElMessage({ message: message, type: "error", duration: 5 * 1000 })

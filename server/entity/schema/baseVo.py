@@ -25,8 +25,8 @@ class Remark(BaseVO):
 
 
 class Page(BaseVO):
-    page_num: Optional[int] = Field(default=1, description='页码', ge=1)
-    page_size: Optional[int] = Field(default=10, description='每页数量', ge=1, le=100)
+    page_num: Optional[int] = Field(default=1, description='页码')
+    page_size: Optional[int] = Field(default=10, description='每页数量')
 
 
 class Order(BaseVO):

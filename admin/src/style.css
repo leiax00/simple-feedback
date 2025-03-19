@@ -12,7 +12,7 @@
     min-width: var(--window-min-width);
   }
   #app {
-    @apply flex place-items-center place-content-center;
+    @apply flex;
   }
 }
 

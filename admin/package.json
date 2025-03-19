@@ -1,7 +1,7 @@
 {
   "name": "admin",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0.20250317",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,6 +11,7 @@
     "lint-fix": "eslint --ext .js,.vue src --fix"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
     "@tailwindcss/vite": "^4.0.13",
     "@vueuse/core": "^13.0.0",
     "axios": "^1.8.3",

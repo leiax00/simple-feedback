@@ -1,6 +1,6 @@
 import request from "@/utils/request"
 
-export function login(username, password) {
+export function login({ username, password }) {
   return request({
     url: "/system/v1/login",
     headers: {

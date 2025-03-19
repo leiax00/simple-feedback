@@ -13,6 +13,18 @@ from server.entity.schema import PageR, R
 router = APIRouter(prefix='/device/v1', tags=['Device'])
 
 @router.get(
+    "/owners",
+    response_model=R[list[schema.OwnerVo]],
+    response_model_exclude_none=True
+)
+async def get_owner_list(
+        db: Session = Depends(database.session),
+        user: str = Depends(manager)
+):
+    owner_list = service.get_owner_list(db) or []
+    return R(data=owner_list)
+
+@router.get(
     "/list",
     response_model=PageR[list[schema.DeviceVo]],
     response_model_exclude_none=True

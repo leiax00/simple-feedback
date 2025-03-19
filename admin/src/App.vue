@@ -5,7 +5,7 @@
 </script>
 
 <template>
-  <el-config-provider size="small" :z-index="zIndex">
+  <el-config-provider size="default" :z-index="zIndex">
     <router-view />
   </el-config-provider>
 </template>

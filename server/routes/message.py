@@ -27,7 +27,25 @@ async def get_topic_list(
     """
     获取问题反馈列表
     """
-    total, topic_list = service.message.topic_list(q, db)
+    with db.begin():
+        total, topic_list = service.message.topic_list(q, db)
+    return PageR(rows=topic_list, total=total)
+
+@router.get(
+    "/list/topic-all",
+    response_model=PageR[list[schema.MessageAll]],
+    response_model_exclude_none=True,
+    description='获取问题反馈列表, 包括子消息'
+)
+async def topic_all_in_one(
+        q: Annotated[schema.MessageQuery, Query()],
+        db: Session = Depends(database.session),
+        user: str = Depends(manager)
+):
+    """
+    获取问题反馈列表, 包括子消息
+    """
+    total, topic_list = service.message.topic_all_in_one(q, db)
     return PageR(rows=topic_list, total=total)
 
 @router.get(
