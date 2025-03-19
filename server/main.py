@@ -7,7 +7,22 @@ from starlette.staticfiles import StaticFiles
 from server import routes
 from server.context.config import config
 
-app = FastAPI()
+app = FastAPI(
+    summary="简易反馈系统",
+    description="""
+> 简单的反馈系统，用于收集用户反馈信息。
+# 客户端使用
+1. 通过初始化接口(`/api/system/v1/init`)进行登录, 需要用到的参数有:
+    * 归属应用code
+    * 设备唯一键, 比如使用设备的IMEI
+2. 通过初始化接口可以获取到token, 归属应用的ID, 设备的ID, 后续接口可以通过这些参数来调用
+# 云端接口使用
+1. 云端使用登录接口(`/api/system/v1/login`)进行登录, 支持Form表单和JSON两种方式登录, 字段:
+    * 用户名: username
+    * 密码: password
+2. 云端用户可以通过admin用户进行创建
+    """
+)
 
 app.include_router(routes.api_router)
 

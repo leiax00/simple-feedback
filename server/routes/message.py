@@ -70,7 +70,29 @@ async def message_list_4_topic(
     "/new",
     response_model=R[schema.MessageBase],
     response_model_exclude_none=True,
-    description='添加问题反馈'
+    summary='添加问题反馈',
+    description="""
+1. 新增需要的字段, meta字段可以自定义, 目前想到的是记录手机型号, APP版本, 设备版本等信息
+```json
+{
+  "deviceId": 0,
+  "ownerId": 0,
+  "content": "string",
+  "meta": {}
+}
+```
+2. 回复消息需要的字段
+```json
+{
+  "topId": 0,
+  "parentId": 0,
+  "ownerId": 0,
+  "deviceId": 0,
+  "content": "string",
+  "meta": {}
+}
+```
+"""
 )
 async def new_message(
         msg: schema.MessageCreate,
