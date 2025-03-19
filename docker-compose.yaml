@@ -1,0 +1,29 @@
+services:
+  feedback:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - VITE_APP_PREFIX=/
+        - VITE_APP_BASE_API=/api
+    image: leiax00/simple-feedback:v1.0.0.20250317
+    container_name: feedback
+    restart: always
+    environment:
+      - DB_HOST=192.168.10.8
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_DATABASE=ww_test
+      - FB_UI_ROOT=./admin/dist
+      - FB_AUTH_API=/api/system/v1/login
+      - FB_AUTH_SALT=simple-feedback-app-secret
+      - FB_AUTH_EXPIRY_TIME=12h
+    ports:
+      - "8000:8000"
+    networks:
+      - feedback-net
+
+networks:
+  feedback-net:
+    driver: bridge
