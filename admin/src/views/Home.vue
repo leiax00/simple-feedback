@@ -117,7 +117,7 @@
           size="small"
           background
           layout="prev, pager, next"
-          :total="50"
+          :total="pageData.total"
           class="mt-4 justify-end"
           @change="onChangePage"
         />
