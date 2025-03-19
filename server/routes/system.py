@@ -93,6 +93,8 @@ async def register_user(
         username: str = Depends(manager),
         db: Session = Depends(database.session)
 ):
+    if username != 'admin':
+        raise HTTPException(status_code=403, detail="Permission denied")
     user_info.create_by = username
     user = service.user.add_user(user_info, db)
     return R(data=user)
