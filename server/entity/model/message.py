@@ -9,7 +9,7 @@ class Message(Base):
     parent_id = Column(BigInteger, server_default=text('0'), comment='父消息ID')
     owner_id = Column(BigInteger, nullable=False, comment='归属ID')
     device_id = Column(BigInteger, nullable=False, comment='设备ID')
-    content = Column(Text, server_default='', comment='内容')
+    content = Column(Text(collation="utf8mb4_unicode_ci"), server_default='', comment='内容')
     meta = Column(Text, server_default='', comment='元数据, json字符串')
     create_by = Column(String(64), server_default='', comment='创建者')
     create_time = Column(DateTime, comment='创建时间')

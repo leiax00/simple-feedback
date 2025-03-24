@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session, sessionmaker, declarative_base
 
 from server.context.config import config
 
-SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://{config.db_config.username}:{config.db_config.password}@{config.db_config.host}:{config.db_config.port}/{config.db_config.database}?charset=utf8"
+SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://{config.db_config.username}:{config.db_config.password}@{config.db_config.host}:{config.db_config.port}/{config.db_config.database}?charset=utf8mb4"
 print(SQLALCHEMY_DATABASE_URL)
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
